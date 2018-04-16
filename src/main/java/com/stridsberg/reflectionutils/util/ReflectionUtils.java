@@ -16,27 +16,44 @@ public class ReflectionUtils<T> {
 	public static <T> T invokeMethod(Class<?> classHolder, String methodName, Object... args) {
 		T t = null;
 		try {
-			t = new MethodImpl(classHolder).invokePrivateMethod(methodName, args);
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SecurityException e) {
+			t = new MethodImpl(classHolder).invokeMethodByName(methodName, args);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return t;
+	}
+
+	public static <T> T invokeMethod(Method method, Object... args) {
+		T t = null;
+		try {
+			t = new MethodImpl(method.getDeclaringClass()).invokeMethod(method, args);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return t;
+	}
+
+	public static Method getMethod(Class<?> classHolder,String methodName, Class<?>... argsClasses) {
+		Method method = null;
+		try {
+			method = new MethodImpl(classHolder).getMethodByNameAndArgs(methodName, argsClasses);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return method;
+	}
+
+	public static Method getPrivateMethod(String methodName, Class<?>... argsClasses) {
+		Method method = null;
+		try {
+			method = new MethodImpl().getPrivateMethodByNameAndArgs(methodName, argsClasses);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return method;
 	}
 
 }

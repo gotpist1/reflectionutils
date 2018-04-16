@@ -11,6 +11,10 @@ import com.stridsberg.reflectionutils.repos.MethodRepo;
 
 public class MethodImpl extends MethodHelper implements MethodRepo {
 	private Class<?> classHolder;
+	
+	public MethodImpl() {
+		
+	}
 
 	public MethodImpl(Class<?> classHolder) {
 		super(classHolder);
@@ -18,15 +22,18 @@ public class MethodImpl extends MethodHelper implements MethodRepo {
 	}
 
 	@Override
-	public Method getMethodByNameAndArgs(String methodName, Object... args) {
+	public Method getMethodByNameAndArgs(String methodName, Class<?>... argsClasses) throws NoSuchMethodException, SecurityException {
 		// TODO Auto-generated method stub
-		return null;
+		Method method = argsClasses != null ? classHolder.getDeclaredMethod(methodName,argsClasses) : classHolder.getDeclaredMethod(methodName);
+		return method;
 	}
 
 	@Override
-	public Method getPrivateMethodByNameAndArgs(String methodName, Object... args) {
+	public Method getPrivateMethodByNameAndArgs(String methodName, Class<?>... argsClasses) throws NoSuchMethodException, SecurityException {
 		// TODO Auto-generated method stub
-		return null;
+		Method method = argsClasses != null ? classHolder.getDeclaredMethod(methodName,argsClasses) : classHolder.getDeclaredMethod(methodName);
+		method.setAccessible(true);
+		return method;
 	}
 
 	@Override
@@ -57,9 +64,15 @@ public class MethodImpl extends MethodHelper implements MethodRepo {
 	}
 
 	@Override
-	public <T> T invokePrivateMethod(String methodName, Object... args) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException, NoSuchMethodException, SecurityException {
+	public <T> T invokeMethodByName(String methodName, Object... args) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException, NoSuchMethodException, SecurityException {
 		// TODO Auto-generated method stub
-		return invokeMethodHelper(methodName, args);
+		return invokeMethodByNameAndArgs(methodName, args);
+	}
+
+	@Override
+	public <T> T invokeMethod(Method method, Object... args) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException, NoSuchMethodException, SecurityException {
+		// TODO Auto-generated method stub
+		return invokeMethodByMethod(method, args);
 	}
 
 }

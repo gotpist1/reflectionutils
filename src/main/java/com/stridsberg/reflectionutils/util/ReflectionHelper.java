@@ -7,55 +7,81 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public abstract class ReflectionHelper {
-    Class<?> classOfMethod;
+	Class<?> classOfMethod;
 
-    public ReflectionHelper(Class<?> classOfMethod) {
-        this.classOfMethod = classOfMethod;
-    }
+	public ReflectionHelper() {
 
-    @SuppressWarnings("unchecked")
-    protected <T> T invokeMethodHelper(String methodName, Object... args)
-            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException, NoSuchMethodException, SecurityException {
-        Object object = null;
-        Method[] methods = classOfMethod.getDeclaredMethods();
-        for (Method method : methods) {
-            if (method.getName().equalsIgnoreCase(methodName)) {
-                method.setAccessible(true);
-                if (shouldInvokeMethod(method, args)) {
-                	if(args != null && args.length > 0) {
-                		object = method.invoke(classOfMethod.getDeclaredConstructor().newInstance(), args);
-                	}else {
-                		object = method.invoke(classOfMethod.getDeclaredConstructor().newInstance());
-                	}
-                    
-                    break;
-                }
+	}
 
-            }
-        }
-        return (T) object;
-    }
+	public ReflectionHelper(Class<?> classOfMethod) {
+		this.classOfMethod = classOfMethod;
+	}
 
-    private boolean shouldInvokeMethod(Method method, Object... args) {
-        if (method.getParameterTypes().length == args.length) {
-            List<Class<?>> classes = Arrays.asList(method.getParameterTypes());
-            List<Class<?>> parameterClasses = Arrays.asList(args).stream().map(parameter -> parameter.getClass())
-                    .map(clazz -> getPrimitiveClass(clazz)).collect(Collectors.toList());
-            if (!classes.containsAll(parameterClasses))
-                return false;
-        } else {
-            return false;
-        }
-        return true;
-    }
+	@SuppressWarnings("unchecked")
+	protected <T> T invokeMethodByNameAndArgs(String methodName, Object... args)
+			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException,
+			NoSuchMethodException, SecurityException {
+		Object object = null;
+		Method[] methods = classOfMethod.getDeclaredMethods();
+		for (Method method : methods) {
+			if (method.getName().equalsIgnoreCase(methodName)) {
+				method.setAccessible(true);
+				if (shouldInvokeMethod(method, args)) {
+					if (args != null && args.length > 0) {
+						object = method.invoke(classOfMethod.getDeclaredConstructor().newInstance(), args);
+					} else {
+						object = method.invoke(classOfMethod.getDeclaredConstructor().newInstance());
+					}
 
-    private Class<?> getPrimitiveClass(Class<?> clazz) {
-        if (clazz.equals(Integer.class)) {
-            return Integer.TYPE;
-        } else if (clazz.equals(Float.class)) {
-            return Float.TYPE;
-        } else {
-            return clazz;
-        }
-    }
+					break;
+				}
+
+			}
+		}
+		return (T) object;
+	}
+
+	@SuppressWarnings("unchecked")
+	protected <T> T invokeMethodByMethod(Method method, Object... args)
+			throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException,
+			NoSuchMethodException, SecurityException {
+		Object object = null;
+		classOfMethod = classOfMethod != null ? classOfMethod : method.getDeclaringClass();
+		if (isPrivate(method.toGenericString()))
+			method.setAccessible(true);
+		if (args != null && args.length > 0) {
+			object = method.invoke(classOfMethod.getDeclaredConstructor().newInstance(), args);
+		} else {
+			object = method.invoke(classOfMethod.getDeclaredConstructor().newInstance());
+		}
+
+		return (T) object;
+	}
+
+	private boolean shouldInvokeMethod(Method method, Object... args) {
+		if (method.getParameterTypes().length == args.length) {
+			List<Class<?>> classes = Arrays.asList(method.getParameterTypes());
+			List<Class<?>> parameterClasses = Arrays.asList(args).stream().map(parameter -> parameter.getClass())
+					.map(clazz -> getPrimitiveClass(clazz)).collect(Collectors.toList());
+			if (!classes.containsAll(parameterClasses))
+				return false;
+		} else {
+			return false;
+		}
+		return true;
+	}
+
+	private Class<?> getPrimitiveClass(Class<?> clazz) {
+		if (clazz.equals(Integer.class)) {
+			return Integer.TYPE;
+		} else if (clazz.equals(Float.class)) {
+			return Float.TYPE;
+		} else {
+			return clazz;
+		}
+	}
+
+	private boolean isPrivate(String methodName) {
+		return methodName.substring(0, methodName.indexOf(" ")).equalsIgnoreCase("private");
+	}
 }

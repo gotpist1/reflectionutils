@@ -14,7 +14,7 @@ public class ReflectionUtilsTest {
 	@Test
 	public void testGetMethods() {
 		List<Method> methods = ReflectionUtils.getMethods(TestClass.class);
-		Assert.assertEquals(1, methods.size());
+		Assert.assertEquals(2, methods.size());
 	}
 	
 	@Test
@@ -22,7 +22,20 @@ public class ReflectionUtilsTest {
 		String actual = ReflectionUtils.invokeMethod(TestClass.class, "getString");
 		Assert.assertEquals("Hello", actual);
 	}
+	
+	@Test
+	public void testInvokeListMethod() {
+		List<String> actual = ReflectionUtils.invokeMethod(TestClass.class, "getList");
+		Assert.assertEquals("Hello", actual.get(0));
+	}
 
+
+	@Test
+	public void testInvokeMethodByMethod() {
+		Method method = ReflectionUtils.getMethod(TestClass.class,"getString");
+		String actual = ReflectionUtils.invokeMethod(method);
+		Assert.assertEquals("Hello", actual);
+	}
 	
 
 }
