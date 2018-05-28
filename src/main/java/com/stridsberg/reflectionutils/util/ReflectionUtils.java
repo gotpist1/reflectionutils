@@ -16,7 +16,7 @@ public class ReflectionUtils<T> {
 	public static <T> T invokeMethod(Class<?> classHolder, String methodName, Object... args) {
 		T t = null;
 		try {
-			t = new MethodImpl(classHolder).invokeMethodByName(methodName, args);
+			t = new MethodImpl(classHolder).invokeMethod(methodName, args);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -43,16 +43,6 @@ public class ReflectionUtils<T> {
 			e.printStackTrace();
 		}
 
-		return method;
-	}
-
-	public static Method getPrivateMethod(String methodName, Class<?>... argsClasses) {
-		Method method = null;
-		try {
-			method = new MethodImpl().getPrivateMethodByNameAndArgs(methodName, argsClasses);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		return method;
 	}
 

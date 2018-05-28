@@ -2,6 +2,8 @@ package com.stridsberg.reflectionutils.util;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.TypeVariable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -56,6 +58,13 @@ public abstract class ReflectionHelper {
 		}
 
 		return (T) object;
+	}
+	
+	protected Class<?> getTypeParameterizedClass(){
+		
+		 
+		 classOfMethod.getTypeParameters().clone().getClass();
+		 return classOfMethod;
 	}
 
 	private boolean shouldInvokeMethod(Method method, Object... args) {

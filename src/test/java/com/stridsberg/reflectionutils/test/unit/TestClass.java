@@ -4,7 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class TestClass {
+public class TestClass<T> {
+
+	private String one;
+
+	private int number;
+
+	private float longNum;
+
 	public void getTest() {
 
 	}
@@ -17,7 +24,11 @@ public class TestClass {
 		return "Hello";
 	}
 	
-	private List<String> getList(){
+	private String getString(String arg) {
+		return "Hello "+arg;
+	}
+
+	private List<String> getList() {
 		List<String> t = new ArrayList<>();
 		t.add("Hello");
 		return t;

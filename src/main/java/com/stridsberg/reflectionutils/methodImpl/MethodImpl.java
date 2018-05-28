@@ -23,18 +23,10 @@ public class MethodImpl extends MethodHelper implements MethodRepo {
 
 	@Override
 	public Method getMethodByNameAndArgs(String methodName, Class<?>... argsClasses) throws NoSuchMethodException, SecurityException {
-		// TODO Auto-generated method stub
 		Method method = argsClasses != null ? classHolder.getDeclaredMethod(methodName,argsClasses) : classHolder.getDeclaredMethod(methodName);
 		return method;
 	}
 
-	@Override
-	public Method getPrivateMethodByNameAndArgs(String methodName, Class<?>... argsClasses) throws NoSuchMethodException, SecurityException {
-		// TODO Auto-generated method stub
-		Method method = argsClasses != null ? classHolder.getDeclaredMethod(methodName,argsClasses) : classHolder.getDeclaredMethod(methodName);
-		method.setAccessible(true);
-		return method;
-	}
 
 	@Override
 	public List<Method> getMethods() {
@@ -44,7 +36,6 @@ public class MethodImpl extends MethodHelper implements MethodRepo {
 
 	@Override
 	public List<Method> getAllMethods() {
-		// TODO Auto-generated method stub
 		return Arrays.asList(classHolder.getMethods());
 	}
 
@@ -58,20 +49,12 @@ public class MethodImpl extends MethodHelper implements MethodRepo {
 	}
 
 	@Override
-	public <T> T invokeMethod(String methodName, Object... args) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <T> T invokeMethodByName(String methodName, Object... args) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException, NoSuchMethodException, SecurityException {
-		// TODO Auto-generated method stub
+	public <T> T invokeMethod(String methodName, Object... args) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException, NoSuchMethodException, SecurityException {
 		return invokeMethodByNameAndArgs(methodName, args);
 	}
 
 	@Override
 	public <T> T invokeMethod(Method method, Object... args) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, InstantiationException, NoSuchMethodException, SecurityException {
-		// TODO Auto-generated method stub
 		return invokeMethodByMethod(method, args);
 	}
 
