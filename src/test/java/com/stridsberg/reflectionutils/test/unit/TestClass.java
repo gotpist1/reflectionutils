@@ -1,7 +1,6 @@
 package com.stridsberg.reflectionutils.test.unit;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class TestClass<T> {
@@ -33,4 +32,30 @@ public class TestClass<T> {
 		t.add("Hello");
 		return t;
 	}
+
+    public String getOne() {
+        return one;
+    }
+
+    public void setOne(String one) {
+        this.one = one;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public float getLongNum() {
+        return longNum;
+    }
+
+    public void setLongNum(float longNum) {
+        this.longNum = longNum;
+    }
+
+
 }

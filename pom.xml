@@ -168,18 +168,18 @@
 	<!-- ********************************************** -->
 
 	<organization>
-		<name>Bernardo Martínez Garrido</name>
-		<url>https://github.com/Bernardo-MG</url>
+		<name>Pierre Stridsberg Development</name>
+		<url>https://github.com/gotpist1</url>
 	</organization>
 
 	<developers>
 		<developer>
-			<id>bmg</id>
-			<name>Bernardo Martínez Garrido</name>
-			<email>programming@bernardomg.com</email>
-			<url>https://github.com/Bernardo-MG</url>
-			<organization>Bernardo Martínez Garrido</organization>
-			<organizationUrl>https://github.com/Bernardo-MG</organizationUrl>
+			<id>Gotpist1</id>
+			<name>Pierre Stridsberg</name>
+			<email>pierre.stridsberg@gmail.com</email>
+			<url>https://github.com/gotpist1</url>
+			<organization>Pierre Stridsberg Development</organization>
+			<organizationUrl>https://github.com/gotpist1</organizationUrl>
 			<roles>
 				<role>Developer</role>
 			</roles>
